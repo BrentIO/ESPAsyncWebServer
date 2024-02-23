@@ -1,37 +1,45 @@
 {
-  "name":"ESP Async WebServer",
-  "description":"Asynchronous HTTP and WebSocket Server Library for ESP8266 and ESP32",
-  "keywords":"http,async,websocket,webserver",
-  "authors":
-  {
-    "name": "Hristo Gochkov",
-    "maintainer": true
-  },
-  "repository":
-  {
-    "type": "git",
-    "url": "https://github.com/me-no-dev/ESPAsyncWebServer.git"
-  },
-  "version": "1.2.3",
-  "license": "LGPL-3.0",
-  "frameworks": "arduino",
-  "platforms": ["espressif8266", "espressif32"],
-  "dependencies": [
-    {
-      "owner": "me-no-dev",
-      "name": "ESPAsyncTCP",
-      "version": "^1.2.2",
-      "platforms": "espressif8266"
+    "name": "ESP Async WebServer",
+    "description": "Asynchronous HTTP and WebSocket Server Library for ESP8266 and ESP32",
+    "keywords": "http,async,websocket,webserver",
+    "authors": [
+        {
+            "name": "Hristo Gochkov",
+            "maintainer": false
+        },
+        {
+            "name": "Brent Andrew Hendricks",
+            "url": "https://github.com/brentio",
+            "maintainer": true
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/BrentIO/ESPAsyncWebServer.git"
     },
-    {
-      "owner": "me-no-dev",      
-      "name": "AsyncTCP",
-      "version": "^1.1.1",
-      "platforms": "espressif32"
-    },
-    {
-      "name": "Hash",
-      "platforms": "espressif8266"
-    }
-  ]
+    "version": "2024.2.1",
+    "license": "LGPL-3.0",
+    "frameworks": "arduino",
+    "platforms": [
+        "espressif8266",
+        "espressif32"
+    ],
+    "dependencies": [
+        {
+            "owner": "me-no-dev",
+            "name": "ESPAsyncTCP",
+            "version": "^1.2.2",
+            "platforms": "espressif8266"
+        },
+        {
+            "owner": "BrentIO",
+            "name": "BrentIO_AsyncTCP",
+            "version": "^2024.2.1",
+            "platforms": "espressif32"
+        },
+        {
+            "name": "Hash",
+            "platforms": "espressif8266"
+        }
+    ]
 }
