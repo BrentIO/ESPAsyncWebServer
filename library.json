@@ -17,7 +17,7 @@
         "type": "git",
         "url": "https://github.com/BrentIO/ESPAsyncWebServer.git"
     },
-    "version": "2024.3.1",
+    "version": "2024.3.2",
     "license": "LGPL-3.0",
     "frameworks": "arduino",
     "platforms": [

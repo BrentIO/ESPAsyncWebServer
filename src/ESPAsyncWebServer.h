@@ -57,18 +57,16 @@ class AsyncStaticWebHandler;
 class AsyncCallbackWebHandler;
 class AsyncResponseStream;
 
-#ifndef WEBSERVER_H
 typedef enum {
-  HTTP_GET     = 0b00000001,
-  HTTP_POST    = 0b00000010,
-  HTTP_DELETE  = 0b00000100,
-  HTTP_PUT     = 0b00001000,
-  HTTP_PATCH   = 0b00010000,
-  HTTP_HEAD    = 0b00100000,
-  HTTP_OPTIONS = 0b01000000,
-  HTTP_ANY     = 0b01111111,
+  ASYNC_HTTP_GET     = 0b00000001,
+  ASYNC_HTTP_POST    = 0b00000010,
+  ASYNC_HTTP_DELETE  = 0b00000100,
+  ASYNC_HTTP_PUT     = 0b00001000,
+  ASYNC_HTTP_PATCH   = 0b00010000,
+  ASYNC_HTTP_HEAD    = 0b00100000,
+  ASYNC_HTTP_OPTIONS = 0b01000000,
+  ASYNC_HTTP_ANY     = 0b01111111,
 } WebRequestMethod;
-#endif
 
 //if this value is returned when asked for data, packet will not be sent and you will be asked for data again
 #define RESPONSE_TRY_AGAIN 0xFFFFFFFF
