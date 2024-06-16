@@ -174,7 +174,7 @@ typedef std::function<void(AsyncWebServerRequest *request, JsonVariant &json)> A
 class AsyncCallbackJsonWebHandler: public AsyncWebHandler {
 private:
 protected:
-  const String _uri;
+  String _uri;
   WebRequestMethodComposite _method;
   ArJsonRequestHandlerFunction _onRequest;
   size_t _contentLength;
@@ -202,11 +202,51 @@ public:
     if(!(_method & request->method()))
       return false;
 
-    if(_uri.length() && (_uri != request->url() && !request->url().startsWith(_uri+"/")))
-      return false;
-
     if ( !request->contentType().equalsIgnoreCase(JSON_MIMETYPE) )
       return false;
+
+    #ifdef ASYNCWEBSERVER_REGEX
+
+      if (_uri.startsWith("^") && _uri.endsWith("$"))
+      {
+        std::regex pattern(_uri.c_str());
+        std::smatch matches;
+        std::string s(request->url().c_str());
+
+        if (std::regex_search(s, matches, pattern))
+        {
+          for (size_t i = 1; i < matches.size(); ++i)
+          {
+            // start from 1
+            request->_addPathParam(matches[i].str().c_str());
+          }
+        }
+        else
+        {
+          return false;
+        }
+      }
+      else
+    #endif
+
+        if (_uri.length() && _uri.startsWith("/*."))
+        {
+          String uriTemplate = String (_uri);
+          uriTemplate = uriTemplate.substring(uriTemplate.lastIndexOf("."));
+
+          if (!request->url().endsWith(uriTemplate))
+            return false;
+        }
+        else if (_uri.length() && _uri.endsWith("*"))
+        {
+          String uriTemplate = String(_uri);
+          uriTemplate = uriTemplate.substring(0, uriTemplate.length() - 1);
+
+          if (!request->url().startsWith(uriTemplate))
+            return false;
+        }
+        else if (_uri.length() && (_uri != request->url() && !request->url().startsWith(_uri + "/")))
+          return false;
 
     request->addInterestingHeader("ANY");
     return true;
