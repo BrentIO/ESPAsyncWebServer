@@ -26,6 +26,7 @@
 #include <ESPAsyncTCP.h>
 #endif
 #include <ESPAsyncWebServer.h>
+#include "AsyncJson.h"
 
 AsyncWebServer server(80);
 
@@ -68,10 +69,24 @@ void setup() {
         request->send(200, "text/plain", "Hello, sensor: " + sensorNumber + ", with action: " + action);
     });
 
+    // Send a POST request to <IP>/json/sensor/<number>/action/<action> with a JSON document as the payload
+    server.addHandler(new AsyncCallbackJsonWebHandler("^\/json\/sensor\/([0-9]+)\/action\/([a-zA-Z0-9]+)$", doSomethingWithJson));
+
     server.onNotFound(notFound);
 
     server.begin();
 }
 
 void loop() {
+}
+
+void doSomethingWithJson(AsyncWebServerRequest *request, JsonVariant doc){
+
+     String sensorNumber = request->pathArg(0);
+        String action = request->pathArg(1);
+        request->send(200, "text/plain", "Hello, JSONDoc!  Sensor: " + sensorNumber + ", with action: " + action);
+
+    //Prints the JSON payload sent to the serial
+    serializeJsonPretty(doc, Serial);
+
 }
