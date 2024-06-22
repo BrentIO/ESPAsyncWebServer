@@ -280,6 +280,10 @@ public:
   }
   virtual void handleBody(AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total) override final {
     if (_onRequest) {
+      if(total == 1 && strcmp("{", (const char*)data) == 0){
+        _contentLength = 0;
+        return;
+      }
       _contentLength = total;
       if (total > 0 && request->_tempObject == NULL && total < _maxContentLength) {
         request->_tempObject = malloc(total);
